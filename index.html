@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Bella!</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@400;700&family=Great+Vibes&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@400;700&display=swap');
         
         * {
             margin: 0;
@@ -27,8 +27,64 @@
             scroll-behavior: smooth;
         }
         
-        /* Starfield Background */
-        .stars {
+        /* Ultra-Smooth 3D Background */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            perspective: 2000px;
+            overflow: hidden;
+        }
+        
+        .parallax-layer {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            top: -10%;
+            left: -10%;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        
+        .layer-1 {
+            background: radial-gradient(circle at 20% 50%, rgba(255, 182, 193, 0.12) 0%, transparent 60%);
+            animation: float-bg-ultra-smooth 25s infinite ease-in-out;
+        }
+        
+        .layer-2 {
+            background: radial-gradient(circle at 80% 20%, rgba(255, 133, 162, 0.12) 0%, transparent 60%);
+            animation: float-bg-ultra-smooth 30s infinite ease-in-out reverse;
+        }
+        
+        .layer-3 {
+            background: radial-gradient(circle at 40% 80%, rgba(255, 192, 203, 0.12) 0%, transparent 60%);
+            animation: float-bg-ultra-smooth 35s infinite ease-in-out;
+        }
+        
+        @keyframes float-bg-ultra-smooth {
+            0%, 100% { 
+                transform: translate3d(0, 0, 0) rotateX(0) rotateY(0);
+                filter: blur(0px);
+            }
+            25% { 
+                transform: translate3d(15px, -15px, 30px) rotateX(1deg) rotateY(1deg);
+                filter: blur(0.5px);
+            }
+            50% { 
+                transform: translate3d(-15px, 15px, -30px) rotateX(-1deg) rotateY(-1deg);
+                filter: blur(0px);
+            }
+            75% { 
+                transform: translate3d(10px, 10px, 20px) rotateX(0.5deg) rotateY(0.5deg);
+                filter: blur(0.3px);
+            }
+        }
+        
+        /* Ultra-Smooth Starfield */
+        .stars-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -38,22 +94,62 @@
             z-index: 0;
         }
         
+        .stars-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
         .star {
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background-color: white;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
             border-radius: 50%;
-            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
-            animation: twinkle 4s infinite;
+            animation: twinkle-ultra-smooth 6s infinite ease-in-out;
+            will-change: opacity, transform;
         }
         
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+        .shooting-star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+            animation: shoot-ultra-smooth 4s linear infinite;
+            will-change: transform, opacity;
         }
         
-        /* Initial Door Screen */
+        @keyframes twinkle-ultra-smooth {
+            0%, 100% { 
+                opacity: 0.2; 
+                transform: scale(0.8);
+                filter: brightness(0.8);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.2);
+                filter: brightness(1.5);
+            }
+        }
+        
+        @keyframes shoot-ultra-smooth {
+            0% {
+                transform: translateX(0) translateY(0) rotate(45deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                transform: translateX(30px) translateY(30px) rotate(45deg) scale(1);
+                opacity: 1;
+            }
+            90% {
+                transform: translateX(270px) translateY(270px) rotate(45deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(300px) translateY(300px) rotate(45deg) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        /* Ultra-Smooth Door Screen */
         .door-container {
             position: fixed;
             top: 0;
@@ -66,7 +162,9 @@
             align-items: center;
             background: linear-gradient(135deg, #ffeef8 0%, #fff5fa 50%, #fff0f5 100%);
             z-index: 1000;
-            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-style: preserve-3d;
+            perspective: 2000px;
         }
         
         .door-title {
@@ -74,29 +172,39 @@
             color: #ff85a2;
             margin-bottom: 2rem;
             text-align: center;
-            animation: glow 2s infinite alternate;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: glow-ultra-smooth 3s infinite ease-in-out alternate;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-shadow: 0 0 20px rgba(255, 133, 162, 0.3);
+            transform-style: preserve-3d;
+            will-change: transform, filter;
         }
         
         .door-title:hover {
-            transform: scale(1.05);
+            transform: scale(1.02) rotateY(2deg);
         }
         
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #fff, 0 0 20px #ff85a2; }
-            to { text-shadow: 0 0 20px #fff, 0 0 30px #ff85a2, 0 0 40px #ff85a2; }
+        @keyframes glow-ultra-smooth {
+            from { 
+                text-shadow: 0 0 15px #fff, 0 0 25px #ff85a2, 0 0 35px #ff85a2;
+                filter: brightness(1) drop-shadow(0 0 10px rgba(255, 133, 162, 0.3));
+            }
+            to { 
+                text-shadow: 0 0 25px #fff, 0 0 35px #ff85a2, 0 0 45px #ff85a2, 0 0 55px #ff85a2;
+                filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 133, 162, 0.5));
+            }
         }
         
         .door-frame {
             position: relative;
             width: 300px;
             height: 400px;
-            perspective: 1000px;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            perspective: 2000px;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-style: preserve-3d;
         }
         
         .door-frame:hover {
-            transform: scale(1.02);
+            transform: scale(1.01) rotateY(1deg);
         }
         
         .door {
@@ -106,9 +214,10 @@
             background: linear-gradient(135deg, #ffb6c1 0%, #ff85a2 100%);
             border: 2px solid #ff85a2;
             transform-style: preserve-3d;
-            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 133, 162, 0.3);
+            box-shadow: 0 15px 30px rgba(255, 133, 162, 0.25);
+            will-change: transform;
         }
         
         .door-left {
@@ -124,22 +233,23 @@
         }
         
         .door-open .door-left {
-            transform: rotateY(-110deg);
+            transform: rotateY(-120deg);
         }
         
         .door-open .door-right {
-            transform: rotateY(110deg);
+            transform: rotateY(120deg);
         }
         
         .door-handle {
             position: absolute;
             width: 15px;
             height: 30px;
-            background-color: #fff;
+            background: linear-gradient(135deg, #fff, #f8f8f8);
             border-radius: 50%;
             top: 50%;
             transform: translateY(-50%);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .door-left .door-handle {
@@ -158,42 +268,52 @@
             width: 80%;
             text-align: center;
             opacity: 0;
-            transition: opacity 1s ease-in;
+            transition: opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             color: #ff85a2;
             font-size: 1.5rem;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
         }
         
         .door-open .door-message {
             opacity: 1;
-            transition-delay: 1s;
+            transition-delay: 1.5s;
         }
         
         .sparkle {
             position: absolute;
-            width: 5px;
-            height: 5px;
-            background-color: white;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
             border-radius: 50%;
-            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
-            animation: twinkle 2s infinite;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            animation: sparkle-ultra-smooth 3s infinite ease-in-out;
+            will-change: opacity, transform;
         }
         
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
+        @keyframes sparkle-ultra-smooth {
+            0%, 100% { 
+                opacity: 0.3; 
+                transform: scale(0.7) rotate(0deg);
+                filter: brightness(0.8);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.3) rotate(180deg);
+                filter: brightness(1.5);
+            }
         }
         
-        /* Main Content */
+        /* Ultra-Smooth Main Content */
         .main-content {
             opacity: 0;
             padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
-            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             z-index: 1;
+            transform-style: preserve-3d;
         }
         
         .content-visible {
@@ -203,17 +323,17 @@
         .birthday-header {
             text-align: center;
             margin: 2rem 0;
-            animation: fadeInDown 1s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInDown-ultra-smooth 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
-        @keyframes fadeInDown {
+        @keyframes fadeInDown-ultra-smooth {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-40px) rotateX(-5deg);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) rotateX(0);
             }
         }
         
@@ -221,94 +341,101 @@
             font-size: 2.5rem;
             color: #ff85a2;
             margin-bottom: 1rem;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: linear-gradient(45deg, #ff85a2, #ffb6c1, #ff85a2);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift-ultra-smooth 4s ease infinite;
+            will-change: background-position, transform;
+        }
+        
+        @keyframes gradient-shift-ultra-smooth {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .birthday-title:hover {
-            transform: scale(1.05);
+            transform: scale(1.03) rotateY(3deg);
         }
         
-        /* Floating Hearts */
+        /* Ultra-Smooth Floating Hearts */
         .heart {
             position: fixed;
-            width: 20px;
-            height: 20px;
-            background-color: rgba(255, 133, 162, 0.7);
+            background: linear-gradient(135deg, rgba(255, 133, 162, 0.7), rgba(255, 182, 193, 0.7));
             transform: rotate(45deg);
-            animation: float 10s linear infinite;
+            animation: float-ultra-smooth 12s linear infinite;
             z-index: 1;
             pointer-events: none;
+            box-shadow: 0 0 15px rgba(255, 133, 162, 0.3);
+            will-change: transform, opacity;
         }
         
         .heart:before,
         .heart:after {
             content: "";
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: rgba(255, 133, 162, 0.7);
+            background: linear-gradient(135deg, rgba(255, 133, 162, 0.7), rgba(255, 182, 193, 0.7));
             border-radius: 50%;
         }
         
-        .heart:before {
-            top: -10px;
-            left: 0;
-        }
-        
-        .heart:after {
-            top: 0;
-            left: -10px;
-        }
-        
-        @keyframes float {
+        @keyframes float-ultra-smooth {
             0% {
-                transform: translateY(100vh) rotate(45deg);
+                transform: translateY(100vh) rotate(45deg) scale(0);
                 opacity: 0;
             }
-            10% {
-                opacity: 1;
+            5% {
+                transform: translateY(95vh) rotate(45deg) scale(1);
+                opacity: 0.8;
             }
-            90% {
-                opacity: 1;
+            95% {
+                transform: translateY(-5vh) rotate(45deg) scale(1);
+                opacity: 0.8;
             }
             100% {
-                transform: translateY(-100vh) rotate(45deg);
+                transform: translateY(-100vh) rotate(45deg) scale(0);
                 opacity: 0;
             }
         }
         
-        /* Polaroid Photos */
+        /* Ultra-Smooth Polaroid Photos */
         .polaroid-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 2rem;
             margin: 3rem 0;
+            perspective: 2000px;
         }
         
         .polaroid {
-            background-color: white;
+            background: linear-gradient(135deg, #fff, #f8f8f8);
             padding: 1rem 1rem 3rem 1rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transform: rotate(var(--rotation, 0deg));
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            transform: rotate(var(--rotation, 0deg)) translateZ(0);
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             opacity: 0;
-            transform: translateY(30px) rotate(var(--rotation, 0deg));
-            animation: slideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            transform: translateY(40px) rotate(var(--rotation, 0deg)) translateZ(0);
+            animation: slideIn-ultra-smooth 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
             animation-delay: var(--delay, 0s);
             cursor: pointer;
+            transform-style: preserve-3d;
+            border-radius: 8px;
+            will-change: transform, box-shadow;
         }
         
         .polaroid:hover {
-            transform: scale(1.05) rotate(0deg);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transform: scale(1.03) rotate(0deg) translateZ(50px) rotateY(3deg);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
             z-index: 10;
         }
         
-        @keyframes slideIn {
+        @keyframes slideIn-ultra-smooth {
             to {
                 opacity: 1;
-                transform: translateY(0) rotate(var(--rotation, 0deg));
+                transform: translateY(0) rotate(var(--rotation, 0deg)) translateZ(0);
             }
         }
         
@@ -316,11 +443,13 @@
             width: 200px;
             height: 200px;
             object-fit: cover;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 5px;
+            will-change: transform;
         }
         
         .polaroid:hover img {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
         
         .polaroid-caption {
@@ -331,21 +460,21 @@
             margin-top: 1rem;
         }
         
-        /* Photo Gallery Lightbox */
+        /* Ultra-Smooth Lightbox */
         .lightbox {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.95));
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .lightbox.active {
@@ -357,19 +486,21 @@
             position: relative;
             max-width: 90%;
             max-height: 90%;
-            transform: scale(0.8);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.9) rotateY(15deg);
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-style: preserve-3d;
+            will-change: transform;
         }
         
         .lightbox.active .lightbox-content {
-            transform: scale(1);
+            transform: scale(1) rotateY(0deg);
         }
         
         .lightbox-image {
             max-width: 100%;
             max-height: 80vh;
-            border-radius: 5px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
         }
         
         .lightbox-caption {
@@ -387,21 +518,21 @@
             color: white;
             font-size: 2rem;
             cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .lightbox-close:hover {
-            transform: rotate(90deg);
+            transform: rotate(90deg) scale(1.1);
         }
         
-        /* Enhanced Birthday Cake */
+        /* Ultra-Smooth Birthday Cake */
         .cake-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 3rem 0;
             position: relative;
-            perspective: 1000px;
+            perspective: 2000px;
         }
         
         .cake-title {
@@ -417,28 +548,29 @@
             height: 250px;
             margin: 0 auto;
             transform-style: preserve-3d;
-            transform: rotateX(5deg) rotateY(-5deg);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: rotateX(3deg) rotateY(-3deg);
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
         }
         
         .cake-container:hover .cake {
-            transform: rotateX(0deg) rotateY(0deg);
+            transform: rotateX(0deg) rotateY(0deg) scale(1.02);
         }
         
         .cake-layer {
             position: absolute;
             width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
             transform-style: preserve-3d;
         }
         
         .cake-bottom {
             height: 80px;
-            background: linear-gradient(to bottom, #ffb6c1, #ff85a2);
+            background: linear-gradient(135deg, #ffb6c1, #ff85a2);
             bottom: 0;
             z-index: 1;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
         .cake-bottom::before {
@@ -446,20 +578,20 @@
             position: absolute;
             width: 100%;
             height: 20px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
             top: 0;
             left: 0;
-            border-radius: 10px 10px 0 0;
+            border-radius: 12px 12px 0 0;
         }
         
         .cake-middle {
             height: 60px;
             width: 90%;
-            background: linear-gradient(to bottom, #ffc0cb, #ffb6c1);
+            background: linear-gradient(135deg, #ffc0cb, #ffb6c1);
             bottom: 70px;
             left: 5%;
             z-index: 2;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
         .cake-middle::before {
@@ -467,20 +599,20 @@
             position: absolute;
             width: 100%;
             height: 20px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
             top: 0;
             left: 0;
-            border-radius: 10px 10px 0 0;
+            border-radius: 12px 12px 0 0;
         }
         
         .cake-top {
             height: 40px;
             width: 80%;
-            background: linear-gradient(to bottom, #ffd1dc, #ffc0cb);
+            background: linear-gradient(135deg, #ffd1dc, #ffc0cb);
             bottom: 120px;
             left: 10%;
             z-index: 3;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
         .cake-top::before {
@@ -488,20 +620,20 @@
             position: absolute;
             width: 100%;
             height: 20px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
             top: 0;
             left: 0;
-            border-radius: 10px 10px 0 0;
+            border-radius: 12px 12px 0 0;
         }
         
-        /* Frosting */
+        /* Enhanced Frosting */
         .frosting {
             position: absolute;
             width: 100%;
             height: 15px;
             background: linear-gradient(to bottom, #fff, #ffeef8);
             border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
         }
         
         .frosting-bottom {
@@ -525,16 +657,7 @@
             z-index: 6;
         }
         
-        /* Sprinkles */
-        .sprinkle {
-            position: absolute;
-            width: 5px;
-            height: 2px;
-            border-radius: 1px;
-            z-index: 7;
-        }
-        
-        /* Candles */
+        /* Enhanced Candles */
         .candle {
             position: absolute;
             width: 15px;
@@ -542,36 +665,17 @@
             background: linear-gradient(to bottom, #ffffff, #ffeef8);
             border-radius: 5px;
             z-index: 8;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .candle1 {
-            bottom: 150px;
-            left: 30%;
-        }
+        .candle1 { bottom: 150px; left: 30%; }
+        .candle2 { bottom: 150px; left: 40%; }
+        .candle3 { bottom: 150px; left: 50%; }
+        .candle4 { bottom: 150px; left: 60%; }
+        .candle5 { bottom: 150px; left: 70%; }
         
-        .candle2 {
-            bottom: 150px;
-            left: 40%;
-        }
-        
-        .candle3 {
-            bottom: 150px;
-            left: 50%;
-        }
-        
-        .candle4 {
-            bottom: 150px;
-            left: 60%;
-        }
-        
-        .candle5 {
-            bottom: 150px;
-            left: 70%;
-        }
-        
-        /* Enhanced Flame */
+        /* Ultra-Smooth Flame */
         .flame {
             position: absolute;
             width: 20px;
@@ -579,8 +683,9 @@
             top: -25px;
             left: -2.5px;
             transform-origin: center bottom;
-            animation: flicker 0.5s infinite alternate;
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: flicker-ultra-smooth 0.6s infinite ease-in-out alternate;
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform, opacity;
         }
         
         .flame-inner {
@@ -591,35 +696,35 @@
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
             left: 5px;
             top: 5px;
-            animation: flicker-inner 0.3s infinite alternate;
+            animation: flicker-inner-ultra-smooth 0.4s infinite ease-in-out alternate;
         }
         
         .flame-outer {
             position: absolute;
             width: 20px;
             height: 25px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 235, 59, 0.8) 30%, rgba(255, 152, 0, 0.8) 60%, rgba(255, 87, 34, 0.8) 100%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 235, 59, 0.8) 30%, rgba(255, 152, 0, 0.8) 60%, rgba(255, 87, 34, 0.8) 100%);
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
             filter: blur(2px);
             opacity: 0.7;
         }
         
-        @keyframes flicker {
-            0% { transform: scale(1) rotate(-2deg); }
-            100% { transform: scale(1.1) rotate(2deg); }
-        }
-        
-        @keyframes flicker-inner {
+        @keyframes flicker-ultra-smooth {
             0% { transform: scale(1) rotate(-1deg); }
             100% { transform: scale(1.05) rotate(1deg); }
         }
         
-        .cake-container:hover .flame {
-            opacity: 0;
-            animation: blowOut 0.5s forwards;
+        @keyframes flicker-inner-ultra-smooth {
+            0% { transform: scale(1) rotate(-0.5deg); }
+            100% { transform: scale(1.02) rotate(0.5deg); }
         }
         
-        @keyframes blowOut {
+        .cake-container:hover .flame {
+            opacity: 0;
+            animation: blowOut-ultra-smooth 0.8s forwards;
+        }
+        
+        @keyframes blowOut-ultra-smooth {
             0% { transform: scale(1) rotate(0deg); opacity: 1; }
             100% { transform: scale(0) rotate(180deg); opacity: 0; }
         }
@@ -631,7 +736,7 @@
             width: 100%;
             text-align: center;
             opacity: 0;
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             font-family: 'Dancing Script', cursive;
             font-size: 1.5rem;
             color: #ff85a2;
@@ -641,7 +746,7 @@
             opacity: 1;
         }
         
-        /* Floating Balloons */
+        /* Ultra-Smooth Floating Balloons */
         .balloon-container {
             position: fixed;
             top: 0;
@@ -658,8 +763,9 @@
             height: 100px;
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
             opacity: 0.8;
-            animation: float-balloon 15s infinite ease-in-out;
-            box-shadow: inset -10px -10px 0 rgba(0, 0, 0, 0.1);
+            animation: float-balloon-ultra-smooth 18s infinite ease-in-out;
+            box-shadow: inset -10px -10px 0 rgba(0, 0, 0, 0.08);
+            will-change: transform;
         }
         
         .balloon1 {
@@ -671,25 +777,25 @@
         .balloon2 {
             background: linear-gradient(135deg, rgba(255, 133, 162, 0.7), rgba(255, 192, 203, 0.7));
             left: 30%;
-            animation-delay: 2s;
+            animation-delay: 3s;
         }
         
         .balloon3 {
             background: linear-gradient(135deg, rgba(255, 192, 203, 0.7), rgba(255, 209, 220, 0.7));
             left: 50%;
-            animation-delay: 4s;
+            animation-delay: 6s;
         }
         
         .balloon4 {
             background: linear-gradient(135deg, rgba(255, 209, 220, 0.7), rgba(255, 182, 193, 0.7));
             left: 70%;
-            animation-delay: 6s;
+            animation-delay: 9s;
         }
         
         .balloon5 {
             background: linear-gradient(135deg, rgba(255, 182, 193, 0.7), rgba(255, 133, 162, 0.7));
             left: 90%;
-            animation-delay: 8s;
+            animation-delay: 12s;
         }
         
         .balloon:after {
@@ -697,22 +803,28 @@
             position: absolute;
             width: 2px;
             height: 100px;
-            background-color: rgba(255, 255, 255, 0.7);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), transparent);
             left: 50%;
             bottom: -100px;
             transform: translateX(-50%);
         }
         
-        @keyframes float-balloon {
+        @keyframes float-balloon-ultra-smooth {
             0%, 100% {
-                transform: translateY(100vh) rotate(-5deg);
+                transform: translateY(100vh) rotate(-3deg) scale(1);
+            }
+            25% {
+                transform: translateY(75vh) rotate(0deg) scale(1.05);
             }
             50% {
-                transform: translateY(-100vh) rotate(5deg);
+                transform: translateY(50vh) rotate(3deg) scale(0.95);
+            }
+            75% {
+                transform: translateY(25vh) rotate(0deg) scale(1.02);
             }
         }
         
-        /* Memory Timeline */
+        /* Ultra-Smooth Timeline */
         .timeline-container {
             position: relative;
             margin: 3rem 0;
@@ -751,8 +863,8 @@
             background-color: inherit;
             width: 50%;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .timeline-item.visible {
@@ -771,12 +883,12 @@
             top: 15px;
             border-radius: 50%;
             z-index: 1;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 10px rgba(255, 133, 162, 0.5);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 0 20px rgba(255, 133, 162, 0.4);
         }
         
         .timeline-item:hover::after {
-            transform: scale(1.2);
+            transform: scale(1.15);
         }
         
         .left {
@@ -821,14 +933,14 @@
             padding: 20px 30px;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
             position: relative;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .timeline-content:hover {
-            transform: scale(1.03);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
         }
         
         .timeline-date {
@@ -843,140 +955,122 @@
             color: #555;
         }
         
-        /* Fixed Envelope and Letter System */
-        .envelope-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 3rem 0;
-            position: relative;
-            perspective: 1000px;
-        }
-        
-        .envelope-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2rem;
-            color: #ff85a2;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        
-        .envelope-wrapper {
-            position: relative;
-            width: 400px;
-            height: 250px;
+        /* Ultra-Smooth Handwritten Note */
+        .handwritten-note {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 3rem auto;
+            max-width: 800px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
-            transform-style: preserve-3d;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 10;
-        }
-        
-        .envelope-wrapper:hover {
-            transform: scale(1.02);
-        }
-        
-        .envelope {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #ffb6c1, #ff85a2);
-            border-radius: 10px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            transform-style: preserve-3d;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .envelope-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #ff85a2, #ff6b8a);
-            border-radius: 10px;
-            transform: translateZ(-10px);
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .envelope-front {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #ffb6c1, #ff85a2);
-            border-radius: 10px;
-            transform: translateZ(10px);
+            position: relative;
             overflow: hidden;
         }
         
-        .envelope-flap {
+        .handwritten-note::before {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 125px;
-            background: linear-gradient(135deg, #ff85a2, #ff6b8a);
-            transform-origin: top;
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.1), rgba(255, 133, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .handwritten-note:hover::before {
+            opacity: 1;
+        }
+        
+        .handwritten-note:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+        }
+        
+        .handwritten-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ff85a2;
+            margin-bottom: 1rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .handwritten-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #555;
+            white-space: pre-wrap;
+            overflow: hidden;
+            height: 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .handwritten-text.visible {
+            height: auto;
+            animation: typing-ultra-smooth 3s steps(100) forwards;
+        }
+        
+        @keyframes typing-ultra-smooth {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        /* Ultra-Smooth Letter Modal */
+        .letter-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .letter-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .letter-modal-content {
+            position: relative;
+            width: 600px;
+            max-width: 90%;
+            height: 700px;
+            max-height: 90%;
+            transform: scale(0.9) rotateY(15deg);
+            transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             transform-style: preserve-3d;
-            clip-path: polygon(0 0, 100% 0, 50% 100%);
-            z-index: 2;
+            will-change: transform;
         }
         
-        .envelope.open .envelope-flap {
-            transform: rotateX(-180deg);
-        }
-        
-        .envelope-side-left {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 20px;
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b8a, #ff85a2);
-            transform: rotateY(-90deg) translateZ(-10px);
-            transform-origin: left;
-        }
-        
-        .envelope-side-right {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 20px;
-            height: 100%;
-            background: linear-gradient(90deg, #ff85a2, #ff6b8a);
-            transform: rotateY(90deg) translateZ(-10px);
-            transform-origin: right;
-        }
-        
-        .envelope-bottom {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 20px;
-            background: linear-gradient(180deg, #ff6b8a, #ff85a2);
-            transform: rotateX(-90deg) translateZ(-10px);
-            transform-origin: bottom;
+        .letter-modal.active .letter-modal-content {
+            transform: scale(1) rotateY(0deg);
         }
         
         .letter-paper {
             position: absolute;
-            width: 360px;
-            height: 200px;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(to bottom, #fff9f9, #fff);
-            border-radius: 5px;
-            top: 25px;
-            left: 20px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transform: translateY(0) scale(0.95);
-            opacity: 0;
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1;
-            overflow: hidden;
-        }
-        
-        .envelope.open .letter-paper {
-            transform: translateY(-50px) scale(1);
-            opacity: 1;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            padding: 40px;
+            overflow-y: auto;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
         }
         
         .letter-paper::before {
@@ -998,9 +1092,7 @@
         
         .letter-header {
             text-align: center;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 30px;
         }
         
         .letter-date {
@@ -1011,10 +1103,10 @@
         }
         
         .letter-greeting {
-            font-family: 'Great Vibes', cursive;
-            font-size: 1.8rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
             color: #ff85a2;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .letter-body {
@@ -1022,174 +1114,23 @@
             font-size: 1.2rem;
             line-height: 1.8;
             color: #555;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 30px;
         }
         
         .letter-signature {
             text-align: right;
-            font-family: 'Great Vibes', cursive;
-            font-size: 1.8rem;
-            color: #ff85a2;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .envelope-seal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, #ff85a2, #ff6b8a);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255, 133, 162, 0.5);
-            z-index: 3;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .envelope-seal::before {
-            content: "❤";
-            color: white;
-            font-size: 20px;
-        }
-        
-        .envelope.open .envelope-seal {
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0;
-        }
-        
-        .envelope-hint {
-            position: absolute;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
             font-family: 'Dancing Script', cursive;
-            font-size: 1.2rem;
-            color: #ff85a2;
-            opacity: 0.7;
-            animation: pulse 2s infinite;
-            z-index: 5;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
-        }
-        
-        /* Letter Modal */
-        .letter-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .letter-modal.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .letter-modal-content {
-            position: relative;
-            width: 600px;
-            max-width: 90%;
-            height: 700px;
-            max-height: 90%;
-            transform: scale(0.8) rotateY(90deg);
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-        }
-        
-        .letter-modal.active .letter-modal-content {
-            transform: scale(1) rotateY(0deg);
-        }
-        
-        .letter-modal-paper {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, #fff9f9, #fff);
-            border-radius: 5px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            overflow-y: auto;
-            transform-style: preserve-3d;
-            backface-visibility: hidden;
-        }
-        
-        .letter-modal-paper::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent,
-                transparent 29px,
-                rgba(255, 133, 162, 0.1) 29px,
-                rgba(255, 133, 162, 0.1) 30px
-            );
-            pointer-events: none;
-        }
-        
-        .letter-modal-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .letter-modal-date {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.2rem;
-            color: #ff85a2;
-            margin-bottom: 10px;
-        }
-        
-        .letter-modal-greeting {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2rem;
-            color: #ff85a2;
-            margin-bottom: 20px;
-        }
-        
-        .letter-modal-body {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 30px;
-        }
-        
-        .letter-modal-signature {
-            text-align: right;
-            font-family: 'Great Vibes', cursive;
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #ff85a2;
         }
         
-        .letter-modal-close {
+        .letter-close {
             position: absolute;
             top: 20px;
             right: 20px;
             width: 40px;
             height: 40px;
-            background-color: rgba(255, 133, 162, 0.7);
+            background: linear-gradient(135deg, rgba(255, 133, 162, 0.7), rgba(255, 182, 193, 0.7));
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -1197,41 +1138,41 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 10;
         }
         
-        .letter-modal-close:hover {
-            transform: rotate(90deg);
-            background-color: rgba(255, 133, 162, 1);
+        .letter-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: linear-gradient(135deg, rgba(255, 133, 162, 1), rgba(255, 182, 193, 1));
         }
         
-        /* Countdown Timer */
+        /* Ultra-Smooth Countdown Timer */
         .countdown-container {
             text-align: center;
             margin: 2rem 0;
-            padding: 1rem;
+            padding: 2rem;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
-            border-radius: 10px;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
         
         .countdown-container:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
         }
         
         .countdown-title {
             font-size: 1.5rem;
             color: #ff85a2;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 1.5rem;
             flex-wrap: wrap;
         }
         
@@ -1239,29 +1180,31 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0.5rem;
+            padding: 1rem;
             background: linear-gradient(135deg, #ffb6c1, #ff85a2);
-            border-radius: 5px;
-            min-width: 80px;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            min-width: 100px;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
         }
         
         .countdown-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transform: scale(1.03) translateZ(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
         .countdown-number {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: white;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         
         .countdown-label {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: white;
+            margin-top: 0.5rem;
         }
         
         .birthday-message {
@@ -1269,38 +1212,46 @@
             color: #ff85a2;
             font-weight: bold;
             display: none;
-            animation: pulse 1.5s infinite;
+            animation: pulse-ultra-smooth 2s infinite;
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        @keyframes pulse-ultra-smooth {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
         }
         
-        /* Confetti */
+        /* Ultra-Smooth Confetti */
         .confetti {
             position: fixed;
             width: 10px;
             height: 10px;
             background-color: #ffb6c1;
             position: absolute;
-            animation: confetti-fall 3s linear forwards;
+            animation: confetti-fall-ultra-smooth 4s linear forwards;
             z-index: 999;
+            will-change: transform, opacity;
         }
         
-        @keyframes confetti-fall {
+        @keyframes confetti-fall-ultra-smooth {
             0% {
-                transform: translateY(-100vh) rotate(0deg);
+                transform: translateY(-100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            5% {
+                transform: translateY(-95vh) rotate(36deg) scale(1);
+                opacity: 1;
+            }
+            95% {
+                transform: translateY(95vh) rotate(684deg) scale(1);
                 opacity: 1;
             }
             100% {
-                transform: translateY(100vh) rotate(720deg);
+                transform: translateY(100vh) rotate(720deg) scale(0);
                 opacity: 0;
             }
         }
         
-        /* Particle System */
+        /* Ultra-Smooth Particle System */
         .particle {
             position: fixed;
             pointer-events: none;
@@ -1315,7 +1266,7 @@
             background: radial-gradient(circle, rgba(255, 133, 162, 0.8), rgba(255, 133, 162, 0.2));
         }
         
-        @keyframes particle-animation {
+        @keyframes particle-animation-ultra-smooth {
             0% {
                 transform: translate(0, 0) scale(1);
                 opacity: 1;
@@ -1323,6 +1274,59 @@
             100% {
                 transform: translate(var(--tx), var(--ty)) scale(0);
                 opacity: 0;
+            }
+        }
+        
+        /* Ultra-Smooth 3D Floating Elements */
+        .floating-element {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            transform-style: preserve-3d;
+        }
+        
+        .floating-heart {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, rgba(255, 133, 162, 0.6), rgba(255, 182, 193, 0.6));
+            position: relative;
+            transform: rotate(45deg);
+            animation: float-3d-ultra-smooth 18s infinite ease-in-out;
+            will-change: transform;
+        }
+        
+        .floating-heart:before,
+        .floating-heart:after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, rgba(255, 133, 162, 0.6), rgba(255, 182, 193, 0.6));
+            border-radius: 50%;
+        }
+        
+        .floating-heart:before {
+            top: -15px;
+            left: 0;
+        }
+        
+        .floating-heart:after {
+            top: 0;
+            left: -15px;
+        }
+        
+        @keyframes float-3d-ultra-smooth {
+            0%, 100% {
+                transform: rotate(45deg) translateX(0) translateY(0) translateZ(0);
+            }
+            25% {
+                transform: rotate(45deg) translateX(15px) translateY(-20px) translateZ(30px);
+            }
+            50% {
+                transform: rotate(45deg) translateX(-20px) translateY(15px) translateZ(50px);
+            }
+            75% {
+                transform: rotate(45deg) translateX(20px) translateY(20px) translateZ(25px);
             }
         }
         
@@ -1341,32 +1345,13 @@
                 height: 150px;
             }
             
-            .envelope-wrapper {
-                width: 320px;
-                height: 200px;
-            }
-            
-            .letter-paper {
-                width: 280px;
-                height: 160px;
-                padding: 20px;
-            }
-            
-            .letter-modal-content {
-                width: 90%;
-                height: 80%;
-            }
-            
-            .letter-modal-paper {
-                padding: 20px;
-            }
-            
             .countdown-item {
-                min-width: 60px;
+                min-width: 80px;
+                padding: 0.8rem;
             }
             
             .countdown-number {
-                font-size: 1.5rem;
+                font-size: 2rem;
             }
             
             .timeline::after {
@@ -1398,12 +1383,28 @@
                 width: 250px;
                 height: 200px;
             }
+            
+            .letter-modal-content {
+                width: 90%;
+                height: 80%;
+            }
+            
+            .letter-paper {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Starfield Background -->
-    <div class="stars" id="stars"></div>
+    <!-- Ultra-Smooth 3D Background -->
+    <div class="background-container">
+        <div class="parallax-layer layer-1"></div>
+        <div class="parallax-layer layer-2"></div>
+        <div class="parallax-layer layer-3"></div>
+    </div>
+    
+    <!-- Ultra-Smooth Starfield -->
+    <div class="stars-container" id="starsContainer"></div>
     
     <!-- Floating Balloons -->
     <div class="balloon-container">
@@ -1412,6 +1413,17 @@
         <div class="balloon balloon3"></div>
         <div class="balloon balloon4"></div>
         <div class="balloon balloon5"></div>
+    </div>
+    
+    <!-- 3D Floating Elements -->
+    <div class="floating-element" style="top: 20%; left: 10%;">
+        <div class="floating-heart"></div>
+    </div>
+    <div class="floating-element" style="top: 60%; left: 80%; animation-delay: 6s;">
+        <div class="floating-heart"></div>
+    </div>
+    <div class="floating-element" style="top: 40%; left: 50%; animation-delay: 12s;">
+        <div class="floating-heart"></div>
     </div>
     
     <!-- Initial Door Screen -->
@@ -1437,7 +1449,7 @@
             <h1 class="birthday-title">Happy 25th Birthday, Bella!</h1>
         </div>
         
-        <!-- Enhanced Birthday Cake -->
+        <!-- Ultra-Smooth Birthday Cake -->
         <div class="cake-container">
             <h2 class="cake-title">Make a Wish!</h2>
             <div class="cake">
@@ -1477,11 +1489,11 @@
                         <div class="flame-inner"></div>
                     </div>
                 </div>
-                <div class="cake-message">Make a wish and blow out candles!</div>
+                <div class="cake-message">Make a wish and blow out the candles!</div>
             </div>
         </div>
         
-        <!-- Polaroid Photos -->
+        <!-- Ultra-Smooth Polaroid Photos -->
         <div class="polaroid-container">
             <div class="polaroid" style="--delay: 0.2s; --rotation: -5deg;" data-caption="First Date">
                 <img src="https://picsum.photos/seed/bella1/200/200.jpg" alt="Memory 1">
@@ -1501,7 +1513,7 @@
             </div>
         </div>
         
-        <!-- Memory Timeline -->
+        <!-- Ultra-Smooth Timeline -->
         <div class="timeline-container">
             <h2 class="timeline-title">Our Journey Together</h2>
             <div class="timeline">
@@ -1538,58 +1550,40 @@
             </div>
         </div>
         
-        <!-- Fixed Envelope and Letter System -->
-        <div class="envelope-container">
-            <h2 class="envelope-title">A Special Note For You</h2>
-            <div class="envelope-wrapper" id="envelopeWrapper">
-                <div class="envelope" id="envelope">
-                    <div class="envelope-back"></div>
-                    <div class="envelope-front">
-                        <div class="envelope-flap"></div>
-                        <div class="envelope-seal"></div>
-                    </div>
-                    <div class="envelope-side-left"></div>
-                    <div class="envelope-side-right"></div>
-                    <div class="envelope-bottom"></div>
-                    <div class="letter-paper">
-                        <div class="letter-header">
-                            <div class="letter-date">November 29, 2024</div>
-                            <div class="letter-greeting">My Dearest Bella,</div>
-                        </div>
-                        <div class="letter-body">
-                            <p>Happy 25th Birthday! Today marks another year of your wonderful life, and I feel so lucky to be a part of it.</p>
-                            <p>From the moment we met, I knew you were someone special. Your kindness, your laughter, and your beautiful spirit have made my life so much brighter.</p>
-                            <p>As you celebrate this milestone, I want you to know how much you mean to me. You've brought so much joy into my life, and I cherish every moment we spend together.</p>
-                            <p>May this next chapter of your life be filled with adventure, love, and endless happiness. I can't wait to see all the amazing things you'll accomplish.</p>
-                            <p>Happy Birthday, my love. Here's to many more years of making beautiful memories together.</p>
-                        </div>
-                        <div class="letter-signature">
-                            All my love,<br>
-                            DD
-                        </div>
-                    </div>
-                </div>
-                <div class="envelope-hint">Click to open envelope</div>
+        <!-- Ultra-Smooth Handwritten Note -->
+        <div class="handwritten-note" id="handwrittenNote">
+            <h2 class="handwritten-title">A Note For You</h2>
+            <div class="handwritten-text" id="handwrittenText">
+Dear Bella,
+
+On your special day, I wanted to take a moment to celebrate you. You bring so much joy and light into my life, and I'm grateful for every moment we've shared together.
+
+May this year bring you happiness, adventure, and all the love you deserve. You deserve nothing but the best, and I hope this birthday is just the beginning of an amazing year ahead.
+
+Happy 25th Birthday!
+
+With all my love,
+DD
             </div>
         </div>
         
-        <!-- Letter Modal -->
+        <!-- Ultra-Smooth Letter Modal -->
         <div class="letter-modal" id="letterModal">
             <div class="letter-modal-content">
-                <div class="letter-modal-paper">
-                    <div class="letter-modal-close" id="letterModalClose">&times;</div>
-                    <div class="letter-modal-header">
-                        <div class="letter-modal-date">November 29, 2024</div>
-                        <div class="letter-modal-greeting">My Dearest Bella,</div>
+                <div class="letter-paper">
+                    <div class="letter-close" id="letterClose">&times;</div>
+                    <div class="letter-header">
+                        <div class="letter-date">November 29, 2025</div>
+                        <div class="letter-greeting">My Dearest Bella,</div>
                     </div>
-                    <div class="letter-modal-body">
+                    <div class="letter-body">
                         <p>Happy 25th Birthday! Today marks another year of your wonderful life, and I feel so lucky to be a part of it.</p>
                         <p>From the moment we met, I knew you were someone special. Your kindness, your laughter, and your beautiful spirit have made my life so much brighter.</p>
                         <p>As you celebrate this milestone, I want you to know how much you mean to me. You've brought so much joy into my life, and I cherish every moment we spend together.</p>
                         <p>May this next chapter of your life be filled with adventure, love, and endless happiness. I can't wait to see all the amazing things you'll accomplish.</p>
                         <p>Happy Birthday, my love. Here's to many more years of making beautiful memories together.</p>
                     </div>
-                    <div class="letter-modal-signature">
+                    <div class="letter-signature">
                         All my love,<br>
                         DD
                     </div>
@@ -1597,7 +1591,7 @@
             </div>
         </div>
         
-        <!-- Countdown Timer -->
+        <!-- Ultra-Smooth Countdown Timer -->
         <div class="countdown-container">
             <h2 class="countdown-title">Countdown to Bella's Birthday</h2>
             <div class="countdown" id="countdown">
@@ -1622,7 +1616,7 @@
         </div>
     </div>
     
-    <!-- Photo Gallery Lightbox -->
+    <!-- Ultra-Smooth Lightbox -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-content">
             <span class="lightbox-close" id="lightbox-close">&times;</span>
@@ -1636,61 +1630,86 @@
             const doorFrame = document.getElementById('doorFrame');
             const doorContainer = document.getElementById('doorContainer');
             const mainContent = document.getElementById('mainContent');
-            const envelopeWrapper = document.getElementById('envelopeWrapper');
-            const envelope = document.getElementById('envelope');
+            const handwrittenText = document.getElementById('handwrittenText');
+            const handwrittenNote = document.getElementById('handwrittenNote');
             const letterModal = document.getElementById('letterModal');
-            const letterModalClose = document.getElementById('letterModalClose');
+            const letterClose = document.getElementById('letterClose');
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
             const lightboxCaption = document.getElementById('lightbox-caption');
             const lightboxClose = document.getElementById('lightbox-close');
-            const stars = document.getElementById('stars');
+            const starsContainer = document.getElementById('starsContainer');
             
-            // Create starfield background
-            function createStars() {
-                for (let i = 0; i < 100; i++) {
-                    const star = document.createElement('div');
-                    star.classList.add('star');
+            // Create ultra-smooth starfield
+            function createUltraSmoothStars() {
+                // Create multiple star layers
+                for (let layer = 0; layer < 3; layer++) {
+                    const starsLayer = document.createElement('div');
+                    starsLayer.classList.add('stars-layer');
+                    
+                    // Create stars for this layer
+                    const starCount = 40 + layer * 20;
+                    for (let i = 0; i < starCount; i++) {
+                        const star = document.createElement('div');
+                        star.classList.add('star');
+                        
+                        // Random position
+                        star.style.left = `${Math.random() * 100}%`;
+                        star.style.top = `${Math.random() * 100}%`;
+                        
+                        // Random size based on layer
+                        const size = Math.random() * (3 - layer * 0.5) + 1;
+                        star.style.width = `${size}px`;
+                        star.style.height = `${size}px`;
+                        
+                        // Random animation delay
+                        star.style.animationDelay = `${Math.random() * 6}s`;
+                        
+                        starsLayer.appendChild(star);
+                    }
+                    
+                    starsContainer.appendChild(starsLayer);
+                }
+                
+                // Create shooting stars
+                for (let i = 0; i < 6; i++) {
+                    const shootingStar = document.createElement('div');
+                    shootingStar.classList.add('shooting-star');
                     
                     // Random position
-                    star.style.left = `${Math.random() * 100}%`;
-                    star.style.top = `${Math.random() * 100}%`;
-                    
-                    // Random size
-                    const size = Math.random() * 3;
-                    star.style.width = `${size}px`;
-                    star.style.height = `${size}px`;
+                    shootingStar.style.left = `${Math.random() * 100}%`;
+                    shootingStar.style.top = `${Math.random() * 50}%`;
                     
                     // Random animation delay
-                    star.style.animationDelay = `${Math.random() * 5}s`;
+                    shootingStar.style.animationDelay = `${Math.random() * 20}s`;
                     
-                    stars.appendChild(star);
+                    starsContainer.appendChild(shootingStar);
                 }
             }
             
-            createStars();
+            createUltraSmoothStars();
             
-            // Create sparkles around the door
-            function createSparkles() {
-                for (let i = 0; i < 20; i++) {
+            // Create ultra-smooth sparkles around the door
+            function createUltraSmoothSparkles() {
+                for (let i = 0; i < 35; i++) {
                     const sparkle = document.createElement('div');
                     sparkle.classList.add('sparkle');
                     
                     // Random position around the door
                     const angle = Math.random() * Math.PI * 2;
-                    const distance = 150 + Math.random() * 50;
+                    const distance = 150 + Math.random() * 80;
                     const x = Math.cos(angle) * distance + 150;
                     const y = Math.sin(angle) * distance + 200;
                     
                     sparkle.style.left = `${x}px`;
                     sparkle.style.top = `${y}px`;
-                    sparkle.style.animationDelay = `${Math.random() * 2}s`;
+                    sparkle.style.animationDelay = `${Math.random() * 3}s`;
                     
                     doorFrame.appendChild(sparkle);
                 }
             }
             
-            createSparkles();
+            createUltraSmoothSparkles();
             
             // Door click event
             doorFrame.addEventListener('click', function() {
@@ -1701,45 +1720,30 @@
                     doorContainer.style.opacity = '0';
                     mainContent.classList.add('content-visible');
                     
-                    // Create confetti effect
-                    createConfetti();
-                }, 2500);
+                    // Trigger handwritten text animation
+                    setTimeout(() => {
+                        handwrittenText.classList.add('visible');
+                    }, 1200);
+                    
+                    // Create ultra-smooth confetti effect
+                    createUltraSmoothConfetti();
+                }, 2000);
             });
             
-            // Envelope click event - Fixed version
-            envelopeWrapper.addEventListener('click', function(e) {
-                // Prevent event bubbling
-                e.stopPropagation();
-                
-                // Toggle envelope open state
-                envelope.classList.toggle('open');
-                
-                // Create confetti when envelope opens
-                if (envelope.classList.contains('open')) {
-                    createConfetti();
-                    
-                    // Show letter modal after a short delay
-                    setTimeout(() => {
-                        letterModal.classList.add('active');
-                    }, 1000);
-                } else {
-                    // Close modal if envelope is closed
-                    letterModal.classList.remove('active');
-                }
+            // Handwritten note click event
+            handwrittenNote.addEventListener('click', function() {
+                letterModal.classList.add('active');
+                createUltraSmoothConfetti();
             });
             
             // Letter modal close event
-            letterModalClose.addEventListener('click', function(e) {
-                e.stopPropagation();
+            letterClose.addEventListener('click', function() {
                 letterModal.classList.remove('active');
-                envelope.classList.remove('open');
             });
             
-            // Close modal when clicking outside
             letterModal.addEventListener('click', function(e) {
                 if (e.target === letterModal) {
                     letterModal.classList.remove('active');
-                    envelope.classList.remove('open');
                 }
             });
             
@@ -1767,8 +1771,8 @@
                 }
             });
             
-            // Create floating hearts
-            function createHeart() {
+            // Create ultra-smooth floating hearts
+            function createUltraSmoothHeart() {
                 const heart = document.createElement('div');
                 heart.classList.add('heart');
                 
@@ -1780,8 +1784,19 @@
                 heart.style.width = `${size}px`;
                 heart.style.height = `${size}px`;
                 
+                // Set heart:before and heart:after sizes
+                const style = document.createElement('style');
+                style.textContent = `
+                    .heart:nth-child(${document.querySelectorAll('.heart').length + 1}):before,
+                    .heart:nth-child(${document.querySelectorAll('.heart').length + 1}):after {
+                        width: ${size}px;
+                        height: ${size}px;
+                    }
+                `;
+                document.head.appendChild(style);
+                
                 // Random animation duration
-                const duration = Math.random() * 3 + 5;
+                const duration = Math.random() * 3 + 9;
                 heart.style.animationDuration = `${duration}s`;
                 
                 document.body.appendChild(heart);
@@ -1793,16 +1808,16 @@
             }
             
             // Create hearts periodically
-            setInterval(createHeart, 2000);
+            setInterval(createUltraSmoothHeart, 2500);
             
             // Create initial hearts
             for (let i = 0; i < 5; i++) {
-                setTimeout(createHeart, i * 1000);
+                setTimeout(createUltraSmoothHeart, i * 1200);
             }
             
-            // Create confetti effect
-            function createConfetti() {
-                for (let i = 0; i < 50; i++) {
+            // Create ultra-smooth confetti effect
+            function createUltraSmoothConfetti() {
+                for (let i = 0; i < 120; i++) {
                     setTimeout(() => {
                         const confetti = document.createElement('div');
                         confetti.classList.add('confetti');
@@ -1811,7 +1826,7 @@
                         confetti.style.left = `${Math.random() * 100}%`;
                         
                         // Random color
-                        const colors = ['#ffb6c1', '#ff85a2', '#ffffff', '#ffc0cb'];
+                        const colors = ['#ffb6c1', '#ff85a2', '#ffffff', '#ffc0cb', '#ffd1dc', '#ffccdd'];
                         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                         
                         // Random shape
@@ -1832,15 +1847,15 @@
                         // Remove confetti after animation completes
                         setTimeout(() => {
                             confetti.remove();
-                        }, 3000);
-                    }, i * 30);
+                        }, 4000);
+                    }, i * 25);
                 }
             }
             
-            // Countdown Timer
-            function updateCountdown() {
-                // Set the target date (November 29, 2024 - adjusted to make sense for 25th birthday)
-                const targetDate = new Date('November 29, 2024 00:00:00').getTime();
+            // Real-time Countdown Timer to November 29, 2025
+            function updateUltraSmoothCountdown() {
+                // Set target date to November 29, 2025
+                const targetDate = new Date('November 29, 2025 00:00:00').getTime();
                 const now = new Date().getTime();
                 const timeLeft = targetDate - now;
                 
@@ -1862,8 +1877,8 @@
             }
             
             // Update countdown every second
-            setInterval(updateCountdown, 1000);
-            updateCountdown(); // Initial call
+            setInterval(updateUltraSmoothCountdown, 1000);
+            updateUltraSmoothCountdown(); // Initial call
             
             // Timeline animation on scroll
             const timelineItems = document.querySelectorAll('.timeline-item');
@@ -1880,12 +1895,12 @@
             window.addEventListener('scroll', checkTimelineItems);
             checkTimelineItems(); // Initial check
             
-            // Particle system following cursor
+            // Ultra-smooth particle system following cursor
             let mouseX = 0;
             let mouseY = 0;
             let particles = [];
             let particleCount = 0;
-            const maxParticles = 20;
+            const maxParticles = 30;
             
             document.addEventListener('mousemove', function(e) {
                 mouseX = e.clientX;
@@ -1893,12 +1908,12 @@
                 
                 // Create particle at mouse position
                 if (particleCount < maxParticles) {
-                    createParticle(mouseX, mouseY);
+                    createUltraSmoothParticle(mouseX, mouseY);
                     particleCount++;
                 }
             });
             
-            function createParticle(x, y) {
+            function createUltraSmoothParticle(x, y) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
@@ -1908,7 +1923,7 @@
                 
                 // Random direction for particle movement
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = Math.random() * 50 + 20;
+                const velocity = Math.random() * 40 + 15;
                 const tx = Math.cos(angle) * velocity;
                 const ty = Math.sin(angle) * velocity;
                 
@@ -1916,12 +1931,12 @@
                 particle.style.setProperty('--ty', `${ty}px`);
                 
                 // Random size
-                const size = Math.random() * 10 + 5;
+                const size = Math.random() * 8 + 4;
                 circle.style.width = `${size}px`;
                 circle.style.height = `${size}px`;
                 
                 // Random color
-                const colors = ['#ffb6c1', '#ff85a2', '#ffffff', '#ffc0cb'];
+                const colors = ['#ffb6c1', '#ff85a2', '#ffffff', '#ffc0cb', '#ffd1dc', '#ffccdd'];
                 circle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 
                 // Position particle at mouse coordinates
@@ -1931,24 +1946,24 @@
                 document.body.appendChild(particle);
                 
                 // Animate particle
-                particle.style.animation = 'particle-animation 1s ease-out forwards';
+                particle.style.animation = 'particle-animation-ultra-smooth 1.2s ease-out forwards';
                 
                 // Remove particle after animation completes
                 setTimeout(() => {
                     particle.remove();
                     particleCount--;
-                }, 1000);
+                }, 1200);
             }
             
-            // Add click event to create confetti anywhere on the page
+            // Add click event to create ultra-smooth confetti anywhere on the page
             document.addEventListener('click', function(e) {
-                // Don't create confetti when clicking on the door, envelope, or polaroids
-                if (e.target.closest('#doorFrame') || e.target.closest('#envelopeWrapper') || e.target.closest('.polaroid')) {
+                // Don't create confetti when clicking on the door, polaroids, or handwritten note
+                if (e.target.closest('#doorFrame') || e.target.closest('.polaroid') || e.target.closest('#handwrittenNote')) {
                     return;
                 }
                 
-                // Create confetti at click position
-                for (let i = 0; i < 20; i++) {
+                // Create ultra-smooth confetti at click position
+                for (let i = 0; i < 35; i++) {
                     const confetti = document.createElement('div');
                     confetti.classList.add('confetti');
                     
@@ -1956,7 +1971,7 @@
                     confetti.style.top = `${e.clientY}px`;
                     
                     // Random color
-                    const colors = ['#ffb6c1', '#ff85a2', '#ffffff', '#ffc0cb'];
+                    const colors = ['#ffb6c1', '#ff85a2', '#ffffff', '#ffc0cb', '#ffd1dc', '#ffccdd'];
                     confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                     
                     // Random shape
@@ -1974,9 +1989,9 @@
                     
                     // Random direction
                     const angle = Math.random() * Math.PI * 2;
-                    const velocity = Math.random() * 200 + 100;
+                    const velocity = Math.random() * 150 + 80;
                     const vx = Math.cos(angle) * velocity;
-                    const vy = Math.sin(angle) * velocity - 100; // Subtract to make it go up initially
+                    const vy = Math.sin(angle) * velocity - 80; // Subtract to make it go up initially
                     
                     document.body.appendChild(confetti);
                     
@@ -1989,8 +2004,8 @@
                     const animateConfetti = () => {
                         posX += vx * 0.01;
                         posY += vy * 0.01;
-                        opacity -= 0.01;
-                        rotation += 5;
+                        opacity -= 0.008;
+                        rotation += 4;
                         
                         confetti.style.left = `${posX}px`;
                         confetti.style.top = `${posY}px`;
